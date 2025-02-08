@@ -1,0 +1,13 @@
+﻿services:
+  db:
+    image: mongo
+    restart: always
+    environment:
+      - MONGO_INITDB_DATABASE=golang-todo
+    ports:
+      - 27017:27017
+    volumes:
+      - .\db:/data/db
+volumes:
+  db:
+    driver: local

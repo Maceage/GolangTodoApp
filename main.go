@@ -62,7 +62,11 @@ type (
 func init() {
 	fmt.Println("init function running")
 
-	rnd = renderer.New()
+	rnd = renderer.New(
+		renderer.Options{
+			ParseGlobPattern: "html/*.html",
+		},
+	)
 
 	var err error
 
@@ -78,10 +82,8 @@ func init() {
 	db = client.Database(dbName)
 }
 
-func homeHandler(rw http.ResponseWriter, r *http.Request) {
-	filePath := "./README.md"
-	err := rnd.FileView(rw, http.StatusOK, filePath, "readme.md")
-
+func homeHandler(w http.ResponseWriter, r *http.Request) {
+	err := rnd.HTML(w, http.StatusOK, "indexPage", nil)
 	checkError(err)
 }
 
